@@ -3,7 +3,7 @@
  * Модель заявки на ремонт (основная рабочая сущность). PostgreSQL, драйвер pg.
  * Используется и клиентом (просмотр своих заявок), и механиком-админом (полный CRUD).
  */
-const pool = require('../config/database');
+const pool = require('../middleware/config/database');
 
 const RepairRecord = {
   // Все заявки (для админ-панели механика), с возможностью поиска
