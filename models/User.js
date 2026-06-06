@@ -4,7 +4,7 @@
  * Инкапсулирует все SQL-запросы к таблице users (PostgreSQL, драйвер pg).
  * Все методы асинхронные (возвращают Promise).
  */
-const pool = require('../config/database');
+const pool = require('../middleware/config/database');
 const bcrypt = require('bcryptjs');
 
 const User = {
