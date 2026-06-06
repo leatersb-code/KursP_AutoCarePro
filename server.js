@@ -56,7 +56,38 @@ app.use((req, res) => {
     message: 'Запрашиваемая страница не существует.',
   });
 });
+// --- Автоматическое создание таблиц при старте ---------------------------
+const fs = require('fs');
+async function initDatabase() {
+  try {
+    // Читаем твой sql файл
+    const sql = fs.readFileSync(path.join(__dirname, 'database.sql'), 'utf8');
 
+
+    
+    // Добавляем к нему создание таблицы сессий (чтобы connect-pg-simple не ругался)
+    const sessionTableSql = `
+      CREATE TABLE IF NOT EXISTS "session" (
+        "sid" varchar NOT NULL COLLATE "default",
+        "sess" json NOT NULL,
+        "expire" timestamp(6) NOT NULL
+      ) WITH (OIDS=FALSE);
+      ALTER TABLE "session" DROP CONSTRAINT IF EXISTS "session_pkey";
+      ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+      CREATE INDEX IF NOT EXISTS "IDX_session_expire" ON "session" ("expire");
+    `;
+
+    // Выполняем всё в базе данных
+    await pool.query(sql);
+    await pool.query(sessionTableSql);
+    console.log('БД успешно инициализирована (таблицы созданы).');
+  } catch (err) {
+    console.error('Ошибка инициализации БД:', err);
+  }
+}
+
+
+initDatabase();
 // --- Запуск сервера -----------------------------------------------------
 app.listen(PORT, () => {
   console.log(`AutoCare Pro запущен: http://localhost:${PORT}`);
