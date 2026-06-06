@@ -11,7 +11,7 @@ const express = require('express');
 const session = require('express-session');
 const expressLayouts = require('express-ejs-layouts');
 const pgSession = require('connect-pg-simple')(session);
-const pool = require('./config/database');
+const pool = require('./middleware/config/database');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
