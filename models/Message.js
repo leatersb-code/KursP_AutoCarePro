@@ -2,7 +2,7 @@
  * models/Message.js
  * Модель сообщения из формы обратной связи. PostgreSQL, драйвер pg.
  */
-const pool = require('../config/database');
+const pool = require('../middleware/config/database');
 
 const Message = {
   async create({ name, email, message }) {
