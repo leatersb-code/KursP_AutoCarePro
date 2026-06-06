@@ -1,0 +1,37 @@
+<header class="header">
+  <div class="container nav">
+    <a href="/" class="logo">
+      <span class="logo-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </svg>
+      </span>
+      AutoCare Pro
+    </a>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Меню">☰</button>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/" class="<%= path === '/' ? 'active' : '' %>">Главная</a></li>
+      <li><a href="/services" class="<%= path === '/services' ? 'active' : '' %>">Услуги</a></li>
+      <li><a href="/booking" class="<%= path === '/booking' ? 'active' : '' %>">Запись</a></li>
+      <li><a href="/about" class="<%= path === '/about' ? 'active' : '' %>">О нас</a></li>
+      <li><a href="/contact" class="<%= path === '/contact' ? 'active' : '' %>">Контакты</a></li>
+      <% if (currentUser && currentUser.role === 'client') { %>
+        <li><a href="/dashboard" class="<%= path === '/dashboard' ? 'active' : '' %>">Кабинет</a></li>
+      <% } %>
+      <% if (currentUser && currentUser.role === 'mechanic') { %>
+        <li><a href="/mechanic" class="<%= path.startsWith('/mechanic') ? 'active' : '' %>">Панель механика</a></li>
+      <% } %>
+    </ul>
+
+    <div class="nav-right">
+      <% if (currentUser) { %>
+        <span style="font-size:14px;color:#64748b;">👤 <%= currentUser.full_name %></span>
+        <a href="/auth/logout" class="btn btn-outline btn-sm">Выйти</a>
+      <% } else { %>
+        <a href="/auth" class="btn btn-primary btn-sm">Войти</a>
+      <% } %>
+    </div>
+  </div>
+</header>

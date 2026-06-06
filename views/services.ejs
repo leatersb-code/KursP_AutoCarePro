@@ -1,0 +1,101 @@
+<!-- Страница услуг -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Наши услуги</h2>
+      <p>Полный спектр услуг по ремонту и обслуживанию вашего автомобиля</p>
+    </div>
+
+    <!-- Механический ремонт -->
+    <h3 style="font-size:26px;font-weight:800;margin:24px 0 8px;">🔧 Механический ремонт</h3>
+    <p style="color:#64748b;margin-bottom:24px;">Поддержание вашего автомобиля в исправном и безопасном состоянии.</p>
+    <div class="cards-3">
+      <% mechanical.forEach(function(s){ %>
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <h3><%= s.title %></h3>
+          <p><%= s.description %></p>
+          <div class="price">от <%= Number(s.price).toLocaleString('ru-RU') %> сом</div>
+        </div>
+      <% }) %>
+    </div>
+
+    <!-- Что мы предлагаем (чек-лист) -->
+    <div style="margin-top:32px;">
+      <ul class="checklist">
+        <li>Диагностика и ремонт двигателя</li>
+        <li>Обслуживание и ремонт КПП</li>
+        <li>Проверка и замена тормозной системы</li>
+        <li>Ремонт подвески и рулевого управления</li>
+        <li>Обслуживание выхлопной системы</li>
+        <li>Обслуживание системы охлаждения</li>
+        <li>Диагностика электрики</li>
+        <li>Замена масла и технических жидкостей</li>
+      </ul>
+    </div>
+
+    <!-- Кузовные работы -->
+    <h3 style="font-size:26px;font-weight:800;margin:48px 0 8px;">🎨 Кузовные работы и покраска</h3>
+    <p style="color:#64748b;margin-bottom:24px;">Восстановление вашего автомобиля до идеального состояния.</p>
+    <div class="cards-3">
+      <% bodywork.forEach(function(s){ %>
+        <div class="card">
+          <div class="card-icon">🚗</div>
+          <h3><%= s.title %></h3>
+          <p><%= s.description %></p>
+          <div class="price">от <%= Number(s.price).toLocaleString('ru-RU') %> сом</div>
+        </div>
+      <% }) %>
+    </div>
+
+    <div style="margin-top:32px;">
+      <ul class="checklist">
+        <li>Ремонт и восстановление после ДТП</li>
+        <li>Подбор цвета и покраска</li>
+        <li>Удаление вмятин и выравнивание кузова</li>
+        <li>Ремонт царапин и сколов</li>
+        <li>Ремонт и замена бамперов</li>
+        <li>Восстановление геометрии кузова</li>
+        <li>Антикоррозийная обработка</li>
+        <li>Полная покраска автомобиля</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" style="background:#fff;">
+  <div class="container">
+    <div class="section-head">
+      <h2>Частые вопросы</h2>
+      <p>Ответы на самые популярные вопросы клиентов</p>
+    </div>
+    <div class="accordion">
+      <div class="acc-item open">
+        <button class="acc-head">Сколько времени занимает диагностика двигателя?<span>+</span></button>
+        <div class="acc-body"><p>Полная диагностика двигателя обычно занимает 1–2 часа. Наши сертифицированные мастера используют современное оборудование, после чего вы получаете подробный отчёт и смету до начала работ.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">Что входит в обслуживание тормозов?<span>+</span></button>
+        <div class="acc-body"><p>Проверка колодок и дисков, тормозной жидкости, шлангов и суппортов, при необходимости — замена изношенных компонентов с последующим тестированием.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">Как подбирается цвет краски моего авто?<span>+</span></button>
+        <div class="acc-body"><p>Мы используем компьютерный подбор цвета, который анализирует заводскую краску и учитывает её выцветание. Перед нанесением цвет тестируется на небольшом участке.</p></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">Какая гарантия на выполненные работы?<span>+</span></button>
+        <div class="acc-body"><p>Все работы сопровождаются гарантией. Срок зависит от типа услуги и обсуждается до начала ремонта.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-dark">
+  <div class="container">
+    <h2>Готовы записаться на сервис?</h2>
+    <p>Профессиональный ремонт с прозрачными ценами и гарантией качества</p>
+    <a href="/booking" class="btn btn-white">Записаться</a>
+  </div>
+</section>

@@ -1,0 +1,61 @@
+<!-- Личный кабинет клиента -->
+<section class="section">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:28px;">
+      <div>
+        <h2 style="font-size:32px;font-weight:800;">Мои автомобили</h2>
+        <p style="color:#64748b;">Отслеживайте статус ремонта и историю обслуживания</p>
+      </div>
+      <a href="/booking" class="btn btn-primary">+ Добавить заявку</a>
+    </div>
+
+    <% if (records.length === 0) { %>
+      <div class="card" style="text-align:center;padding:48px;">
+        <p style="color:#64748b;">У вас пока нет заявок. <a href="/booking" style="font-weight:600;">Записаться на ремонт →</a></p>
+      </div>
+    <% } %>
+
+    <% records.forEach(function(r){
+        var badge = r.status === 'Completed' ? 'badge-green' : (r.status === 'In Progress' ? 'badge-blue' : 'badge-yellow');
+        var stLabel = r.status === 'Completed' ? 'Завершено' : (r.status === 'In Progress' ? 'В работе' : 'Ожидает');
+    %>
+      <div class="repair-card">
+        <div class="repair-head">
+          <div>
+            <h3 style="font-size:20px;font-weight:700;">🚗 <%= r.vehicle %></h3>
+            <p style="color:#64748b;font-size:14px;">Гос. номер: <%= r.license_plate %></p>
+          </div>
+          <span class="badge <%= badge %>"><%= stLabel %></span>
+        </div>
+
+        <div style="margin-top:14px;">
+          <div style="display:flex;justify-content:space-between;font-size:13px;color:#64748b;">
+            <span>Прогресс</span><span><%= r.progress %>%</span>
+          </div>
+          <div class="progress"><div class="progress-bar" style="width:<%= r.progress %>%;"></div></div>
+        </div>
+
+        <div class="work-box">
+          <div class="wt"><%= r.work_type %></div>
+          <% if (r.notes) { %><div class="wn"><%= r.notes %></div><% } %>
+        </div>
+
+        <div class="repair-meta">
+          <div class="item"><div class="k">📅 Начало</div><div class="v"><%= r.start_date ? new Date(r.start_date).toLocaleDateString('ru-RU') : '—' %></div></div>
+          <div class="item"><div class="k">🕐 Завершение</div><div class="v"><%= r.finish_date ? new Date(r.finish_date).toLocaleDateString('ru-RU') : '—' %></div></div>
+          <div class="item"><div class="k">💲 Стоимость</div><div class="v"><%= Number(r.price).toLocaleString('ru-RU') %> сом</div></div>
+        </div>
+      </div>
+    <% }) %>
+
+    <!-- Краткая статистика -->
+    <div class="card" style="margin-top:8px;">
+      <h3 style="margin-bottom:16px;">Краткая статистика</h3>
+      <div class="cards-3">
+        <div style="text-align:center;"><div style="font-size:32px;font-weight:800;"><%= stats.total %></div><div style="color:#64748b;">Всего авто</div></div>
+        <div style="text-align:center;background:var(--blue);border-radius:10px;padding:12px;"><div style="font-size:32px;font-weight:800;"><%= stats.inProgress %></div><div style="color:#64748b;">В работе</div></div>
+        <div style="text-align:center;background:var(--green);border-radius:10px;padding:12px;"><div style="font-size:32px;font-weight:800;"><%= stats.completed %></div><div style="color:#64748b;">Завершено</div></div>
+      </div>
+    </div>
+  </div>
+</section>

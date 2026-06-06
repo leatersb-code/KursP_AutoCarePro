@@ -1,0 +1,81 @@
+<!-- Страница входа / регистрации -->
+<div class="container">
+  <% if (error) { %><div class="alert alert-error" style="max-width:960px;margin:24px auto 0;"><%= error %></div><% } %>
+  <% if (success) { %><div class="alert alert-success" style="max-width:960px;margin:24px auto 0;"><%= success %></div><% } %>
+
+  <div class="auth-grid">
+    <!-- Левая панель -->
+    <div class="auth-left">
+      <h2>Добро пожаловать в AutoCare Pro</h2>
+      <p>Войдите в личный кабинет, чтобы управлять ремонтом, отслеживать статус работ и общаться с мастерами.</p>
+      <div class="auth-role">
+        <div class="r">
+          <strong>👤 Для клиентов</strong>
+          <p style="font-size:13px;margin-top:6px;">Отслеживайте свои автомобили, статус ремонта и историю обслуживания</p>
+        </div>
+        <div class="r">
+          <strong>🔧 Для механиков</strong>
+          <p style="font-size:13px;margin-top:6px;">Управляйте заявками, обновляйте прогресс и ведите базу данных</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Правая панель -->
+    <div class="auth-right">
+      <!-- Выбор роли -->
+      <div class="role-tabs">
+        <button type="button" class="active" data-role="client">👤 Клиент</button>
+        <button type="button" data-role="mechanic">🔧 Механик</button>
+      </div>
+
+      <!-- Форма входа -->
+      <form action="/auth/login" method="POST" id="loginForm">
+        <h3 style="margin-bottom:6px;">Вход</h3>
+        <p style="color:#64748b;font-size:14px;margin-bottom:20px;">С возвращением! Войдите, чтобы продолжить.</p>
+        <input type="hidden" name="role" id="roleInput" value="client">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" class="form-control" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label>Пароль</label>
+          <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+        </div>
+        <label style="display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:18px;">
+          <input type="checkbox" required> Я не робот (проверка CAPTCHA)
+        </label>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Войти</button>
+        <p class="toggle-link">Нет аккаунта? <a href="#" id="showRegister">Создать аккаунт</a></p>
+      </form>
+
+      <!-- Форма регистрации -->
+      <form action="/auth/register" method="POST" id="registerForm" style="display:none;">
+        <h3 style="margin-bottom:6px;">Регистрация</h3>
+        <p style="color:#64748b;font-size:14px;margin-bottom:20px;">Создайте аккаунт для доступа к сервису.</p>
+        <input type="hidden" name="role" value="client">
+        <div class="form-group">
+          <label>Полное имя</label>
+          <input type="text" name="full_name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" class="form-control" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label>Пароль</label>
+          <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Создать аккаунт</button>
+        <p class="toggle-link">Уже есть аккаунт? <a href="#" id="showLogin">Войти</a></p>
+      </form>
+
+      <!-- Подсказка с тестовыми данными -->
+      <div style="margin-top:24px;padding:14px;background:#f1f5f9;border-radius:10px;font-size:13px;color:#475569;">
+        <strong>Демо-доступ:</strong><br>
+        Механик (админ): mechanic@autocarepro.com / admin123<br>
+        Клиент: client@autocarepro.com / client123
+      </div>
+    </div>
+  </div>
+</div>
+<div style="height:48px;"></div>

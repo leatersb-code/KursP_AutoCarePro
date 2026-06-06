@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Метатеги для SEO (оптимизированы для каждой страницы) -->
+  <title><%= title %></title>
+  <meta name="description" content="AutoCare Pro — профессиональный ремонт и обслуживание автомобилей: механический ремонт, кузовные работы, прозрачные цены и гарантия качества.">
+  <meta name="keywords" content="автосервис, ремонт авто, кузовной ремонт, диагностика двигателя, AutoCare Pro">
+  <!-- Подключение стороннего CSS: шрифт Inter (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Самостоятельно разработанный CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><text y='20' font-size='20'>🔧</text></svg>">
+</head>
+<body>
+  <%- include('partials/header') %>
+  <main>
+    <%- body %>
+  </main>
+  <%- include('partials/footer') %>
+  <!-- Интерактивность на JavaScript -->
+  <script src="/js/main.js"></script>
+</body>
+</html>

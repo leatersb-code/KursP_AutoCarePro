@@ -1,0 +1,85 @@
+<!-- Прямой доступ механика-администратора к базе данных -->
+<section class="section">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:20px;">
+      <div>
+        <h2 style="font-size:32px;font-weight:800;">База данных</h2>
+        <p style="color:#64748b;">Просмотр и управление данными системы (доступ администратора)</p>
+      </div>
+      <a href="/mechanic" class="btn btn-outline">← К панели</a>
+    </div>
+
+    <% if (success) { %><div class="alert alert-success"><%= success %></div><% } %>
+
+    <!-- Таблица: пользователи -->
+    <div class="table-wrap">
+      <h3>👥 Пользователи (таблица users) — <%= users.length %></h3>
+      <table>
+        <thead><tr><th>ID</th><th>Имя</th><th>Email</th><th>Роль</th><th>Регистрация</th><th></th></tr></thead>
+        <tbody>
+          <% users.forEach(function(u){ %>
+            <tr>
+              <td><%= u.id %></td>
+              <td><%= u.full_name %></td>
+              <td><%= u.email %></td>
+              <td><span class="badge <%= u.role==='mechanic'?'badge-blue':'badge-green' %>"><%= u.role==='mechanic'?'Механик (админ)':'Клиент' %></span></td>
+              <td><%= u.created_at ? new Date(u.created_at).toLocaleDateString('ru-RU') : '—' %></td>
+              <td>
+                <% if (u.role !== 'mechanic') { %>
+                  <form action="/mechanic/users/<%= u.id %>/delete" method="POST" data-confirm="Удалить пользователя?" style="display:inline;">
+                    <button class="icon-btn icon-del" title="Удалить">🗑️</button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Таблица: услуги -->
+    <div class="table-wrap">
+      <h3>🔧 Услуги (таблица services) — <%= services.length %></h3>
+      <table>
+        <thead><tr><th>ID</th><th>Название</th><th>Категория</th><th>Цена</th></tr></thead>
+        <tbody>
+          <% services.forEach(function(s){ %>
+            <tr>
+              <td><%= s.id %></td>
+              <td><%= s.title %></td>
+              <td><%= s.category === 'mechanical' ? 'Механика' : 'Кузов' %></td>
+              <td><%= Number(s.price).toLocaleString('ru-RU') %> сом</td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Таблица: сообщения -->
+    <div class="table-wrap">
+      <h3>✉️ Сообщения обратной связи (таблица messages) — <%= messages.length %></h3>
+      <table>
+        <thead><tr><th>ID</th><th>Имя</th><th>Email</th><th>Сообщение</th><th>Дата</th><th></th></tr></thead>
+        <tbody>
+          <% if (messages.length === 0) { %>
+            <tr><td colspan="6" style="text-align:center;color:#64748b;">Сообщений пока нет</td></tr>
+          <% } %>
+          <% messages.forEach(function(m){ %>
+            <tr>
+              <td><%= m.id %></td>
+              <td><%= m.name %></td>
+              <td><%= m.email %></td>
+              <td><%= m.message.length > 60 ? m.message.slice(0,60)+'…' : m.message %></td>
+              <td><%= m.created_at ? new Date(m.created_at).toLocaleDateString('ru-RU') : '—' %></td>
+              <td>
+                <form action="/mechanic/messages/<%= m.id %>/delete" method="POST" data-confirm="Удалить сообщение?" style="display:inline;">
+                  <button class="icon-btn icon-del" title="Удалить">🗑️</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

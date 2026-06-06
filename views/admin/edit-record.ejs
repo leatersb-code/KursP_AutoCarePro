@@ -1,0 +1,47 @@
+<!-- Редактирование заявки (механик) -->
+<section class="section">
+  <div class="container">
+    <a href="/mechanic" style="font-weight:600;">← Назад к панели</a>
+    <div class="section-head" style="margin-top:16px;">
+      <h2>Редактирование заявки</h2>
+    </div>
+    <div class="form-wrap" style="max-width:680px;">
+      <div class="form-card">
+        <form action="/mechanic/records/<%= record.id %>" method="POST">
+          <div class="form-row">
+            <div class="form-group"><label>Автомобиль</label><input name="vehicle" class="form-control" value="<%= record.vehicle %>" required></div>
+            <div class="form-group"><label>Гос. номер</label><input name="license_plate" class="form-control" value="<%= record.license_plate %>" required></div>
+          </div>
+          <div class="form-group"><label>Тип работ</label><input name="work_type" class="form-control" value="<%= record.work_type %>" required></div>
+          <div class="form-group"><label>Примечания</label><textarea name="notes" class="form-control"><%= record.notes %></textarea></div>
+          <div class="form-row">
+            <div class="form-group"><label>Сложность</label>
+              <select name="difficulty" class="form-control">
+                <option <%= record.difficulty==='Easy'?'selected':'' %>>Easy</option>
+                <option <%= record.difficulty==='Medium'?'selected':'' %>>Medium</option>
+                <option <%= record.difficulty==='Hard'?'selected':'' %>>Hard</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Цена (сом)</label><input type="number" name="price" class="form-control" value="<%= record.price %>" min="0"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Статус</label>
+              <select name="status" class="form-control">
+                <option <%= record.status==='Pending'?'selected':'' %>>Pending</option>
+                <option <%= record.status==='In Progress'?'selected':'' %>>In Progress</option>
+                <option <%= record.status==='Completed'?'selected':'' %>>Completed</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Прогресс (%)</label><input type="number" name="progress" class="form-control" value="<%= record.progress %>" min="0" max="100"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Дата начала</label><input type="date" name="start_date" class="form-control" value="<%= record.start_date ? new Date(record.start_date).toISOString().slice(0,10) : '' %>"></div>
+            <div class="form-group"><label>Завершение</label><input type="date" name="finish_date" class="form-control" value="<%= record.finish_date ? new Date(record.finish_date).toISOString().slice(0,10) : '' %>"></div>
+          </div>
+          <button type="submit" class="btn btn-primary">💾 Сохранить изменения</button>
+          <a href="/mechanic" class="btn btn-outline">Отмена</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

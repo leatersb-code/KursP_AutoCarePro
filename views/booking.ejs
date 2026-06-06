@@ -1,0 +1,42 @@
+<!-- Запись на ремонт -->
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Запись на ремонт</h2>
+      <p>Оставьте заявку — наш механик свяжется с вами для подтверждения</p>
+    </div>
+
+    <div class="form-wrap">
+      <% if (success) { %><div class="alert alert-success"><%= success %></div><% } %>
+      <% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+
+      <div class="form-card">
+        <form action="/booking" method="POST">
+          <div class="form-group">
+            <label>Автомобиль (марка, модель, год) *</label>
+            <input type="text" name="vehicle" class="form-control" placeholder="например, Toyota Camry 2019" required>
+          </div>
+          <div class="form-group">
+            <label>Гос. номер *</label>
+            <input type="text" name="license_plate" class="form-control" placeholder="например, 01KG123ABC" required>
+          </div>
+          <div class="form-group">
+            <label>Тип работ *</label>
+            <select name="work_type" class="form-control" required>
+              <option value="">— выберите услугу —</option>
+              <% services.forEach(function(s){ %>
+                <option value="<%= s.title %>"><%= s.title %></option>
+              <% }) %>
+              <option value="Другое">Другое</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Примечания</label>
+            <textarea name="notes" class="form-control" placeholder="Опишите проблему или пожелания..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Отправить заявку</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

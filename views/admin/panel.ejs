@@ -1,0 +1,96 @@
+<!-- Панель механика (администратора): управление заявками -->
+<section class="section">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:8px;">
+      <div>
+        <h2 style="font-size:32px;font-weight:800;">Панель механика</h2>
+        <p style="color:#64748b;">Управление заявками на ремонт и обновление прогресса работ</p>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <a href="/mechanic/database" class="btn btn-outline">🗄️ База данных</a>
+        <button class="btn btn-primary" id="toggleAddForm">+ Добавить заявку</button>
+      </div>
+    </div>
+
+    <% if (success) { %><div class="alert alert-success"><%= success %></div><% } %>
+    <% if (error) { %><div class="alert alert-error"><%= error %></div><% } %>
+
+    <!-- Статистика -->
+    <div class="stats-row" style="margin-top:20px;">
+      <div class="stat-card"><div class="n"><%= stats.total %></div><div class="l">Всего заявок</div></div>
+      <div class="stat-card"><div class="n"><%= stats.in_progress %></div><div class="l">В работе</div></div>
+      <div class="stat-card"><div class="n"><%= stats.completed %></div><div class="l">Завершено</div></div>
+      <div class="stat-card"><div class="n"><%= Number(stats.revenue).toLocaleString('ru-RU') %></div><div class="l">Выручка, сом</div></div>
+    </div>
+
+    <!-- Форма добавления заявки (скрыта по умолчанию) -->
+    <div class="form-card" id="addRecordForm" style="display:none;margin-bottom:24px;">
+      <h3 style="margin-bottom:18px;">Новая заявка на ремонт</h3>
+      <form action="/mechanic/records" method="POST">
+        <div class="form-row">
+          <div class="form-group"><label>Автомобиль</label><input name="vehicle" class="form-control" placeholder="например, 2020 Honda Civic" required></div>
+          <div class="form-group"><label>Гос. номер</label><input name="license_plate" class="form-control" placeholder="ABC-1234" required></div>
+        </div>
+        <div class="form-group"><label>Тип работ</label><input name="work_type" class="form-control" placeholder="например, Ремонт двигателя" required></div>
+        <div class="form-group"><label>Примечания</label><textarea name="notes" class="form-control" placeholder="Подробное описание работ..."></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label>Сложность</label>
+            <select name="difficulty" class="form-control"><option>Easy</option><option selected>Medium</option><option>Hard</option></select>
+          </div>
+          <div class="form-group"><label>Цена (сом)</label><input type="number" name="price" class="form-control" value="0" min="0"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Статус</label>
+            <select name="status" class="form-control"><option selected>Pending</option><option>In Progress</option><option>Completed</option></select>
+          </div>
+          <div class="form-group"><label>Прогресс (%)</label><input type="number" name="progress" class="form-control" value="0" min="0" max="100"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Дата начала</label><input type="date" name="start_date" class="form-control"></div>
+          <div class="form-group"><label>Завершение</label><input type="date" name="finish_date" class="form-control"></div>
+        </div>
+        <button type="submit" class="btn btn-primary">💾 Сохранить</button>
+      </form>
+    </div>
+
+    <!-- Поиск -->
+    <form action="/mechanic" method="GET" style="margin-bottom:20px;">
+      <input type="text" name="search" class="form-control" value="<%= search %>"
+             placeholder="🔍 Поиск по авто, гос. номеру или типу работ..." style="max-width:480px;">
+    </form>
+
+    <!-- Список заявок -->
+    <% if (records.length === 0) { %>
+      <div class="card" style="text-align:center;"><p style="color:#64748b;">Заявки не найдены.</p></div>
+    <% } %>
+    <% records.forEach(function(r){
+        var stBadge = r.status === 'Completed' ? 'badge-green' : (r.status === 'In Progress' ? 'badge-blue' : 'badge-yellow');
+        var dfBadge = r.difficulty === 'Hard' ? 'badge-orange' : (r.difficulty === 'Medium' ? 'badge-yellow' : 'badge-green');
+    %>
+      <div class="repair-card">
+        <div class="repair-head">
+          <div>
+            <h3 style="font-size:19px;font-weight:700;"><%= r.vehicle %></h3>
+            <p style="color:#64748b;font-size:14px;"><%= r.license_plate %></p>
+          </div>
+          <div class="actions-cell">
+            <a href="/mechanic/records/<%= r.id %>/edit" class="icon-btn" title="Редактировать">✏️</a>
+            <form action="/mechanic/records/<%= r.id %>/delete" method="POST" data-confirm="Удалить заявку?" style="display:inline;">
+              <button class="icon-btn icon-del" title="Удалить">🗑️</button>
+            </form>
+          </div>
+        </div>
+        <div class="work-box">
+          <div class="wt"><%= r.work_type %></div>
+          <% if (r.notes) { %><div class="wn"><%= r.notes %></div><% } %>
+        </div>
+        <div class="repair-meta" style="grid-template-columns:repeat(4,1fr);">
+          <div class="item"><div class="k">Статус</div><div class="v"><span class="badge <%= stBadge %>"><%= r.status %></span></div></div>
+          <div class="item"><div class="k">Сложность</div><div class="v"><span class="badge <%= dfBadge %>"><%= r.difficulty %></span></div></div>
+          <div class="item"><div class="k">Цена</div><div class="v"><%= Number(r.price).toLocaleString('ru-RU') %> сом</div></div>
+          <div class="item"><div class="k">Завершение</div><div class="v"><%= r.finish_date ? new Date(r.finish_date).toLocaleDateString('ru-RU') : '—' %></div></div>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+</section>
