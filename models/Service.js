@@ -2,7 +2,7 @@
  * models/Service.js
  * Модель услуги автосервиса (слой Model). PostgreSQL, драйвер pg.
  */
-const pool = require('../config/database');
+const pool = require('../middleware/config/database');
 
 const Service = {
   async getAll() {
